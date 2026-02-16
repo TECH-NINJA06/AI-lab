@@ -18,7 +18,7 @@ def water_jug_bfs(jug1_capacity, jug2_capacity, target):
                 path.append(state)
                 state = parent[state]
             solutions.append(list(reversed(path)))
-            continue  # Continue searching for other solutions
+            continue
 
         rules = [
             (jug1_capacity, jug2),

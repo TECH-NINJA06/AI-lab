@@ -26,7 +26,7 @@ def water_jug_dfs(jug1_capacity, jug2_capacity, target):
         for next_state in rules:
             dfs(next_state[0], next_state[1], path + [state])
         
-        visited.remove(state)
+        # visited.remove(state)
     
     dfs(0, 0, [])
     return all_paths if all_paths else None
