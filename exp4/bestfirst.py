@@ -60,24 +60,23 @@ def reconstruct_path(parent_map, node):
     return path[::-1]
 
 if __name__ == "__main__":
-    graph = {
-        'A': ['B', 'C'],
-        'B': ['D', 'E'],
-        'C': ['F'],
-        'D': [],
-        'E': ['F'],
-        'F': []
-    }
-    
-    heuristic_values = {
-        'A': 3, 'B': 2, 'C': 4, 'D': 0, 'E': 1, 'F': 0
-    }
+    graph = {}
+    num_nodes = int(input("Enter the number of nodes: "))
+    for i in range(num_nodes):
+        node = input("Enter node name: ")
+        neighbors = input(f"Enter neighbors of {node}: ").split()
+        graph[node] = neighbors
+
+    heuristic_values = {}
+    for node in graph:
+        h_value = int(input(f"Enter heuristic value for {node}: "))
+        heuristic_values[node] = h_value
     
     def heuristic(node, goal):
         return heuristic_values.get(node, float('inf'))
     
-    start_node = 'A'
-    goal_node = 'F'
+    start_node = input("Enter the starting node: ")
+    goal_node = input("Enter the goal node: ")
     
     path = best_first_search(graph, start_node, goal_node, heuristic)
     
