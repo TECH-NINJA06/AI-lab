@@ -10,16 +10,16 @@ def best_first_search(graph, start, goal, heuristic):
     heappush(open_list, (h_start, start))
     parent_map[start] = None
     
-    print("--- INITIAL STATE (Before Loop) ---")
+    print("--- Iteration 1 ---")
     print(f"Open List:   [('{start}', None, {h_start})]")
-    print(f"Closed List: []\n")
+    print(f"Closed List: [()]\n")
     
     step = 1
     
     while open_list:
         h_value, current = heappop(open_list)
         
-        print(f"--- STEP {step}: Selected Node '{current}' ---")
+        print(f"--- Iteration {step + 1}: Selected Node '{current}' ---")
         step += 1
         
         if current == goal:
