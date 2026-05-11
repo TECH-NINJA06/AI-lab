@@ -7,7 +7,6 @@ WIN_LINES = [
 ]
 
 def print_board(board):
-    """Prints the current state of the board."""
     print("\n")
     print(f" {board[0]} | {board[1]} | {board[2]} ")
     print("-----------")
@@ -17,7 +16,6 @@ def print_board(board):
     print("\n")
 
 def evaluate(board):
-    """Calculates E = (Lines X can win) - (Lines O can win)."""
     x_lines = 0
     o_lines = 0
     for line in WIN_LINES:
@@ -66,18 +64,15 @@ def minimax(board, depth, is_maximizing):
         return min_eval
 
 def get_ai_move(board, depth_limit=4):
-    """Finds the best move for 'O' (Minimizer)."""
     best_score = math.inf
     best_move = -1
     
     for i in range(9):
         if board[i] == ' ':
-            board[i] = 'O' # Try move
-            # Next turn is X, so is_maximizing is True
+            board[i] = 'O'
             move_score = minimax(board, depth_limit - 1, True)
-            board[i] = ' ' # Undo move
+            board[i] = ' '
             
-            # Since AI is 'O', it wants the LOWEST possible score
             if move_score < best_score:
                 best_score = move_score
                 best_move = i
