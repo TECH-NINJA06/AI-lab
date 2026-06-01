@@ -1,5 +1,3 @@
-"""Simple Vehicle Diagnostics Expert System for AI lab experiment."""
-
 knowledge_base = {
     "battery problem": [
         "engine wont start",
@@ -21,8 +19,10 @@ knowledge_base = {
     ],
 }
 
+SKIP_QUESTION_THRESHOLD = 0.6
 
-def inference(user_symptoms):
+
+def calculate_probabilities(user_symptoms):
     probability = {}
 
     for issue in knowledge_base:
@@ -31,6 +31,12 @@ def inference(user_symptoms):
             if symptom in user_symptoms:
                 match_count += 1
         probability[issue] = match_count / len(knowledge_base[issue])
+
+    return probability
+
+
+def inference(user_symptoms):
+    probability = calculate_probabilities(user_symptoms)
 
     max_probability = max(probability.values())
     likely_issues = [
@@ -62,6 +68,21 @@ def ask_symptoms():
     print("Answer with y/n\n")
 
     for symptom in questions:
+        current_probability = calculate_probabilities(user_symptoms)
+        skip_question = False
+
+        for issue, symptoms in knowledge_base.items():
+            if current_probability[issue] >= SKIP_QUESTION_THRESHOLD and symptom in symptoms:
+                print(
+                    f"Skipping '{symptom}' because '{issue}' is already "
+                    f"{round(current_probability[issue] * 100, 2)}% likely."
+                )
+                skip_question = True
+                break
+
+        if skip_question:
+            continue
+
         answer = input(f"Do you observe {symptom}? [y/n]: ").strip().lower()
         if answer == "y":
             user_symptoms.append(symptom)
